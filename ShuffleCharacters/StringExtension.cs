@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 
 namespace ShuffleCharacters
 {
@@ -25,29 +24,8 @@ namespace ShuffleCharacters
                 throw new ArgumentException("Count of iterations less than 0.");
             }
 
-            //StringBuilder sb = new StringBuilder(256);
-
-            //for (int i = 0; i < count; i++)
-            //{
-            //    sb.Remove(0, sb.Length);
-            //    for (int even = 0; even < source.Length; even += 2)
-            //    {
-            //        sb.Append(source[even]);
-            //    }
-
-            //    for (int odd = 1; odd < source.Length; odd += 2)
-            //    {
-            //        sb.Append(source[odd]);
-            //    }
-
-            //    source = sb.ToString();
-            //}
-
-            //return source;
-
-            var sourceArray = source.ToCharArray();
             var destination = source.ToCharArray();
-            var length = sourceArray.Length;
+            var length = destination.Length;
 
             int middle;
             if (length % 2 == 0)
@@ -80,7 +58,7 @@ namespace ShuffleCharacters
                 source = new string(destination);
             }
 
-            return new string(destination);
+            return source;
         }
     }
 }
