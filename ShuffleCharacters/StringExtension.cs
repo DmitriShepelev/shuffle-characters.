@@ -25,25 +25,62 @@ namespace ShuffleCharacters
                 throw new ArgumentException("Count of iterations less than 0.");
             }
 
-            StringBuilder sb = new StringBuilder(256);
+            //StringBuilder sb = new StringBuilder(256);
 
-            for (int i = 0; i < count; i++)
+            //for (int i = 0; i < count; i++)
+            //{
+            //    sb.Remove(0, sb.Length);
+            //    for (int even = 0; even < source.Length; even += 2)
+            //    {
+            //        sb.Append(source[even]);
+            //    }
+
+            //    for (int odd = 1; odd < source.Length; odd += 2)
+            //    {
+            //        sb.Append(source[odd]);
+            //    }
+
+            //    source = sb.ToString();
+            //}
+
+            //return source;
+
+            var sourceArray = source.ToCharArray();
+            var destination = source.ToCharArray();
+            var length = sourceArray.Length;
+
+            int middle;
+            if (length % 2 == 0)
             {
-                sb.Remove(0, sb.Length);
-                for (int even = 0; even < source.Length; even += 2)
-                {
-                    sb.Append(source[even]);
-                }
-
-                for (int odd = 1; odd < source.Length; odd += 2)
-                {
-                    sb.Append(source[odd]);
-                }
-
-                source = sb.ToString();
+                middle = length / 2;
+            }
+            else
+            {
+                middle = (length / 2) + 1;
             }
 
-            return source;
+            for (int cnt = 0; cnt < count; cnt++)
+            {
+                var indexOfEven = 0;
+                var indexOfOdd = 0;
+                for (int i = 0; i < length; i++)
+                {
+                    if ((i & 1) == 0)
+                    {
+                        destination[indexOfEven] = source[i];
+                        indexOfEven++;
+                    }
+                    else
+                    {
+                        destination[middle + indexOfOdd] = source[i];
+                        indexOfOdd++;
+                    }
+                }
+
+                source = new string(destination);
+            }
+
+            return new string(destination);
         }
     }
 }
