@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text;
+using System.Linq;
 
 namespace ShuffleCharacters
 {
@@ -25,46 +25,52 @@ namespace ShuffleCharacters
                 throw new ArgumentException("Count of iterations less than 0.");
             }
 
-            var iterationsForCompleteCycle = 0;
-            var tmpSource = source;
-            do
-            {
-                tmpSource = Transposition(tmpSource);
-                iterationsForCompleteCycle++;
-            }
-            while (tmpSource != source);
-
-            if (count > iterationsForCompleteCycle)
-            {
-                do
-                {
-                    count -= iterationsForCompleteCycle;
-                }
-                while (count - iterationsForCompleteCycle > 0);
-            }
-
+            var arrayOfSource = source.ToCharArray();            
+            var tmpArray = (char[])arrayOfSource.Clone();
+            
             for (int i = 0; i < count; i++)
             {
-                source = Transposition(source);
+                if (tmpArray.SequenceEqual(arrayOfSource) && i != 0)
+                {
+                    count = (count % i) + i;
+                }
+
+                tmpArray = Transposition(tmpArray);
             }
 
-            return source;
+            return new string(tmpArray);
         }
 
-        private static string Transposition(string source)
+        private static char[] Transposition(char[] array)
         {
-            StringBuilder sb = new StringBuilder(source.Length);
-            for (int even = 0; even < source.Length; even += 2)
+            var tmp = (char[])array.Clone();
+            int middleOfArray;
+            if (array.Length % 2 == 0)
             {
-                sb.Append(source[even]);
+                middleOfArray = array.Length / 2;
+            }
+            else
+            {
+                middleOfArray = (array.Length / 2) + 1;
             }
 
-            for (int odd = 1; odd < source.Length; odd += 2)
+            var indexOfEven = 0;
+            var indexOfOdd = 0;
+            for (int i = 0; i < array.Length; i++)
             {
-                sb.Append(source[odd]);
+                if ((i & 1) == 0)
+                {
+                    tmp[indexOfEven] = array[i];
+                    indexOfEven++;
+                }
+                else
+                {
+                    tmp[middleOfArray + indexOfOdd] = array[i];
+                    indexOfOdd++;
+                }
             }
 
-            return sb.ToString();
+            return tmp;
         }
     }
 }
