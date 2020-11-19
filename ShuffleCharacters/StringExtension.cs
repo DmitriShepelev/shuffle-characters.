@@ -25,16 +25,27 @@ namespace ShuffleCharacters
                 throw new ArgumentException("Count of iterations less than 0.");
             }
 
-            var arrayOfSource = source.ToCharArray();            
+            var arrayOfSource = source.ToCharArray();
             var tmpArray = (char[])arrayOfSource.Clone();
-            
+
+            var iterationsForCompleteCycle = 0;
+            while (true)
+            {
+                tmpArray = Transposition(tmpArray);
+                iterationsForCompleteCycle++;
+                if (tmpArray.SequenceEqual(arrayOfSource))
+                {
+                    break;
+                }
+            }
+
+            while (count > iterationsForCompleteCycle)
+            {
+                count %= iterationsForCompleteCycle;
+            }
+
             for (int i = 0; i < count; i++)
             {
-                if (tmpArray.SequenceEqual(arrayOfSource) && i != 0)
-                {
-                    count = (count % i) + i;
-                }
-
                 tmpArray = Transposition(tmpArray);
             }
 
