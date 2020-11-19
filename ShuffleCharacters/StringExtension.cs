@@ -28,20 +28,20 @@ namespace ShuffleCharacters
             var arrayOfSource = source.ToCharArray();
             var tmpArray = (char[])arrayOfSource.Clone();
 
-            var iterationsForCompleteCycle = 0;
+            var iterationsForPeriod = 0;
             while (true)
             {
                 tmpArray = Transposition(tmpArray);
-                iterationsForCompleteCycle++;
+                iterationsForPeriod++;
                 if (tmpArray.SequenceEqual(arrayOfSource))
                 {
                     break;
                 }
             }
 
-            while (count > iterationsForCompleteCycle)
+            while (count > iterationsForPeriod)
             {
-                count %= iterationsForCompleteCycle;
+                count %= iterationsForPeriod;
             }
 
             for (int i = 0; i < count; i++)
